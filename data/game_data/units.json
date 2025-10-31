@@ -1,0 +1,33 @@
+{
+  "spearman": {
+    "name": "Копейщик",
+    "type": "infantry",
+    "health": 20,
+    "attack": 5,
+    "defense": 4,
+    "damage_min": 2,
+    "damage_max": 3,
+    "speed": 4
+  },
+  "archer": {
+    "name": "Лучник",
+    "type": "shooter",
+    "health": 12,
+    "attack": 6,
+    "defense": 2,
+    "damage_min": 1,
+    "damage_max": 4,
+    "speed": 3,
+    "range": 2
+  },
+  "griffin": {
+    "name": "Грифон",
+    "type": "flyer",
+    "health": 18,
+    "attack": 7,
+    "defense": 5,
+    "damage_min": 3,
+    "damage_max": 5,
+    "speed": 6
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "infantry": {
+    "name": "",
+    "type": ""
+    "health": 0,
+    "attack": 0,
+    "defense": 0,
+    "damage_min": 0,
+    "damage_max": 0,
+    "speed": 0
+  }
+}
+
+
+"name": имя
+"type": вид юнита
+"health": здоровье
+"attack": атака
+"defense": защита
+"damage_min": минимальный урон
+"damage_max": максимальный урон
+"speed": скорость
