@@ -14,6 +14,7 @@ class Unit(ABC):
         self.damage_min = unit_data["damage_min"]
         self.damage_max = unit_data["damage_max"]
         self.speed = unit_data["speed"]
+        self.icon = unit_data["icon"]
         self.position = position
 
 

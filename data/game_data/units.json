@@ -7,7 +7,8 @@
     "defense": 4,
     "damage_min": 2,
     "damage_max": 3,
-    "speed": 4
+    "speed": 4,
+    "icon": "\uD83D\uDD28"
   },
   "archer": {
     "name": "Лучник",
@@ -18,7 +19,8 @@
     "damage_min": 1,
     "damage_max": 4,
     "speed": 3,
-    "range": 2
+    "range": 2,
+    "icon": "\uD83C\uDFF9"
   },
   "griffin": {
     "name": "Грифон",
@@ -28,6 +30,7 @@
     "defense": 5,
     "damage_min": 3,
     "damage_max": 5,
-    "speed": 6
+    "speed": 6,
+    "icon": "\uD83E\uDD85"
   }
 }
