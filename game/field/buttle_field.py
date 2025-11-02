@@ -62,6 +62,17 @@ class BattleField:
         return unit in self.cells and unit in self._unit_positions
 
 
+    def is_position_available(self, position: Position):
+        """
+        Публичный метод для проверки доступности ячейки для перемещения в нее юнита
+
+        :param position:
+        :return:
+        """
+
+        return self._is_valid_position(position) and self._is_cell_free(position)
+
+
     def add_unit(self, unit: 'Unit') -> None:
         """
         Добавляет поданного юнита на поле, если это возможно
