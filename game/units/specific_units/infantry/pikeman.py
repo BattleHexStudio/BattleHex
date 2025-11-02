@@ -1,7 +1,7 @@
 from typing import Dict
 from game.units.unit_factory import UnitFactory
 from game.units.base_units import Infantry
-from game.field.buttle_field import Position
+from game.field.position import Position
 
 @UnitFactory.register
 class Pikeman(Infantry):

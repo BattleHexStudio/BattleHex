@@ -1,7 +1,7 @@
 from typing import Dict, Type
 from re import sub
 
-from game.field.buttle_field import Position
+from game.field.position import Position
 from game.units.base_units import Unit
 from utils.data_functions import load_unit_data
 
@@ -16,10 +16,10 @@ class UnitFactory:
     """
 
     # Словарь, в котором хранятся все существующие классы по ключам из JSON
-    _unit_list: Dict[str, Type['Unit']] = {}
+    _unit_list: Dict[str, Type[Unit]] = {}
 
     @classmethod
-    def register(cls, unit_class: Type['Unit']) -> Type['Unit']:
+    def register(cls, unit_class: Type[Unit]) -> Type[Unit]:
         """
         Декоратор регистрирует класс юнита в реестре фабрики, автоматически определяя его ключ в JSON
         Таким образом

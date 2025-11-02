@@ -1,6 +1,6 @@
 from abc import ABC
 from typing import Dict
-from game.field.buttle_field import Position
+from game.field.position import Position
 
 
 class Unit(ABC):
