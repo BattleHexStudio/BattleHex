@@ -1,2 +1,2 @@
-from .battle_field import *
+from .battlefield import *
 from .position import *

@@ -3,14 +3,14 @@ from numpy import sign
 from abc import ABC
 from typing import Dict, TYPE_CHECKING, Optional
 from game.field.position import Position
-# from core.logging.logger import Logger
+from core.logging.logger import Logger
 
 
-# logger = Logger(__name__)
+logger = Logger(__name__)
 
 
 if TYPE_CHECKING:
-    from game.field.battle_field import BattleField
+    from game.field.battlefield import BattleField
 
 
 class Unit(ABC):
@@ -40,6 +40,7 @@ class Unit(ABC):
 
         # TODO тут проблема, непонятно, пихать его сюда или иначе сделать
         self.range = unit_data.get("range", 1)
+        logger.info(f"{self.__class__.__name__} class unit initiated")
 
 
     def die(self, battlefield: 'BattleField'):
@@ -57,6 +58,7 @@ class Unit(ABC):
         if self.health != 0:
             self.health = 0
         battlefield.remove_unit(self)
+        logger.info(f"Unit {self.name} dead")
 
 
     def _calculate_damage_to_target(self, target: 'Unit'):
@@ -110,10 +112,9 @@ class Unit(ABC):
 
         damage = self._calculate_damage_to_target(target)
         target.health -= damage
-        # logger.info(f"Юнит {self.name} атакует юнита {target.name} и наносит {damage} урона")
+        logger.info(f"Unit {self.__class__.__name__} attack unit {target.__class__.__name__} with damage: {damage}")
 
         if target.health <= 0:
-            # logger.info(f"Юнит {target.name} умирает")
             target.die(battlefield)
 
         return damage
@@ -146,7 +147,7 @@ class Unit(ABC):
         :return:
         """
 
-        return self.icon
+        return str(self.__class__.__name__)
 
 
 class Infantry(Unit):
@@ -235,9 +236,10 @@ class Shooter(Unit):
         real_damage = max(1, real_damage)
         target.health -= real_damage
         # TODO вот здесь ниже происходит самоповтор. хз, можно ли этого избежать каким-то образом
-        # logger.info(f"Юнит {self.name} атакует юнита {target.name} и наносит {real_damage} урона")
+        logger.info(
+            f"Unit {self.__class__.__name__} attack unit {target.__class__.__name__} with damage: {real_damage}"
+        )
         if target.health <= 0:
-            # logger.info(f"Юнит {target.name} умирает")
             target.die(battlefield)
 
         return real_damage

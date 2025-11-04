@@ -7,7 +7,7 @@ logger = Logger(__name__)
 
 
 if TYPE_CHECKING:
-    from game.field.battle_field import BattleField
+    from game.field.battlefield import BattleField
     from game.units.base_units import Unit
 
 
@@ -26,6 +26,7 @@ class BattleManager:
         self.current_turn = 0
         self.game_over = False
         self.winner:  Optional[str] = None
+        logger.info(f"{self.__class__.__name__} initiated")
 
 
     def run(self, *units):
@@ -39,12 +40,14 @@ class BattleManager:
         :return:
         """
 
+        logger.info(f"Game started")
+
         for unit in units:
             self._add_unit(unit)
 
         # TODO
         # надо каким-то образом исправить это дело, потому что на данный момент я никак не проверяю,
-        # какой юнит слева, а какой справа
+        # какой юнит слева, а какой справа, у меня даже нет понятия команд
         self.renderer.render_start_info(self.units_in_game[0], self.units_in_game[-1])
 
         while not self.game_over:
@@ -57,6 +60,8 @@ class BattleManager:
             self.renderer.render_turns_separator()
 
         self.renderer.render_end_info(self.winner)
+
+        logger.info(f"Game is over with winner {self.winner}")
 
 
     def get_game_state(self):
@@ -90,6 +95,8 @@ class BattleManager:
             self._process_unit_turn(unit_turned)
             if self._check_victory():
                 break
+
+        logger.info(f"Turn number {self.current_turn} processed")
 
 
     def _process_unit_turn(self, unit: 'Unit'):

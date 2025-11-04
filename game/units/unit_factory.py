@@ -4,6 +4,10 @@ from re import sub
 from game.field.position import Position
 from game.units.base_units import Unit
 from utils.data_functions import load_unit_data
+from core.logging.logger import Logger
+
+
+logger = Logger(__name__)
 
 
 class UnitFactory:
@@ -38,6 +42,7 @@ class UnitFactory:
             for unit_name in cls._unit_list:
                 cls._unit_data_cache[unit_name] = load_unit_data(unit_name)
             cls._data_loaded = True
+        logger.info(f"Units data preloaded")
 
 
     @classmethod
@@ -51,6 +56,8 @@ class UnitFactory:
         unit_name = cls._class_name_to_key(unit_class.__name__)
 
         cls._unit_list[unit_name] = unit_class
+
+        logger.info(f"Unit class {unit_class.__name__} registered in UnitFactory")
 
         return unit_class
 
@@ -80,6 +87,7 @@ class UnitFactory:
 
         if unit_name not in cls._unit_list:
             available_units = list(cls._unit_list)
+            logger.warning(f"Unsuccessful attempt to register a unit")
             raise ValueError(
                 f'Юнит {unit_name} не зарегистрирован в фабрике.\n'
                 f'Убедитесь, что юнит зарегистрирован при помощи декоратора @UnitFactory.register\n'
@@ -87,7 +95,11 @@ class UnitFactory:
             )
         unit_class: Type['Unit'] = cls._unit_list[unit_name]
 
-        return unit_class(unit_data=unit_data, position=position)
+        created_unit = unit_class(unit_data=unit_data, position=position)
+
+        logger.info(f"{unit_class.__name__} class unit has been created")
+
+        return created_unit
 
 
     @classmethod

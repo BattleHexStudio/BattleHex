@@ -1,10 +1,10 @@
 from typing import List, Optional, Dict, TYPE_CHECKING
 from game.field.position import Position
 from utils.data_functions import load_field_data
-# from core.logging.logger import Logger
+from core.logging.logger import Logger
 
 
-# logger = Logger(__name__)
+logger = Logger(__name__)
 
 
 if TYPE_CHECKING:
@@ -28,6 +28,7 @@ class BattleField:
         self.size = size
         self.cells: List[Optional['Unit']] = [None] * size
         self._unit_positions: Dict['Unit', Position] = {}
+        logger.info(f"{self.__class__.__name__} initiated")
 
 
     def _is_cell_free(self, position: Position):
@@ -41,6 +42,7 @@ class BattleField:
         if self._is_valid_position(position):
             return self.cells[position.x] is None
         else:
+            logger.warning(f"Position {position} is occupied")
             raise ValueError('позиция за пределами поля')
 
 
@@ -86,16 +88,18 @@ class BattleField:
         """
 
         if unit in self._unit_positions:
-            raise ValueError('Этот юнит уже есть на поле')
+            logger.warning('An attempt to add a unit that is already on the field')
+            return
+            # raise ValueError('Этот юнит уже есть на поле')
         if self._is_cell_free(unit.position):
             if self._is_valid_position(unit.position):
                 self.cells[unit.position.x] = unit
                 self._unit_positions[unit] = unit.position
-                # logger.info(f"Юнит {unit.name} добавлен на поле")
+                logger.info(f"Unit {unit} added to field")
             else:
-                raise ValueError('Указанные координаты превышают размеры поля')
+                logger.warning('Position is not available for field')
         else:
-            raise ValueError('Клетка занята, туда нельзя поставить юнита')
+            logger.warning('AN attempt to add a unit to occupied cell')
 
 
     def remove_unit(self, unit: 'Unit'):
@@ -110,7 +114,7 @@ class BattleField:
             unit_position = self._unit_positions[unit]
             self.cells[unit_position.x] = None
             self._unit_positions.pop(unit)
-            # logger.info(f"Юнит {unit.name} убран с поля")
+            logger.info(f"Unit {unit} removed from field")
 
 
     def get_unit_at(self, position: Position) -> Optional['Unit']:
@@ -140,12 +144,13 @@ class BattleField:
         """
 
         if self._unit_on_field(unit):
-            if self._is_valid_position(new_position) and self._is_cell_free(new_position):
+            if self.is_position_available(new_position):
                 old_position: Position = self._unit_positions[unit]
                 self.cells[old_position.x] = None
                 self.cells[new_position.x] = unit
                 self._unit_positions[unit] = new_position
                 unit.position = new_position
+                logger.info(f"Unit {unit} moved from {old_position} to {new_position}")
                 return self.get_distance(old_position, new_position)
         return None
 
