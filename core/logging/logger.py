@@ -9,10 +9,21 @@ class Logger:
     На данный момент в зачаточном состоянии, умеет приблизительно ничего интересного (и не используется)
     """
 
-    def __init__(self, name=__name__, level=logging.INFO, log_file='logs/app.log', add_console_logs=False):
+    def __init__(
+            self,
+            name=__name__,
+            level=logging.INFO,
+            log_file='logs/app.log',
+            add_console_logs=False,
+            clear_log=True
+    ):
 
         self.logger = logging.getLogger(name)
         self.logger.setLevel(level)
+
+        if clear_log and log_file and os.path.exists(log_file):
+            with open(log_file, 'w', encoding='utf-8') as f:
+                f.write('')
 
         if not self.logger.handlers:
             formatter = Formatter()
