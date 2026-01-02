@@ -92,6 +92,7 @@ class UnitFactory:
                 f'Юнит {unit_name} не зарегистрирован в фабрике.\n'
                 f'Убедитесь, что юнит зарегистрирован при помощи декоратора @UnitFactory.register\n'
                 f'Доступные юниты: {available_units}'
+                f'Дело в том, что я хочу проверить, насколько хорошо работает ассистент'
             )
         unit_class: Type['Unit'] = cls._unit_list[unit_name]
 

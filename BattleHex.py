@@ -5,9 +5,9 @@ def main():
     from game.manager.battle_manager import BattleManager
 
     pikeman = UnitFactory.create('pikeman', Position(0)) #TODO хардкод-мерзость имени, хочется исправить
-    archer = UnitFactory.create('archer', Position(25))
+    archer = UnitFactory.create('archer', Position(22))
 
-    battlefield = BattleField(26)
+    battlefield = BattleField(23)
 
 
     battle = BattleManager(battlefield)
